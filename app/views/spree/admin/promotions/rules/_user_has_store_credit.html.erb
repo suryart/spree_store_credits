@@ -1,0 +1,12 @@
+<div class="field alpha omega eight columns ">
+  <div class="field alpha four columns">
+    <%= label_tag "#{param_prefix}_preferred_reason_id", t(:preferred_reason) %>
+    <%= select_tag "#{param_prefix}[preferred_reason_id]",
+                   options_for_select(Spree::StoreCreditReason.all.map { |scr| [scr.name, scr.id] }, promotion_rule.preferred_reason_id),
+                   :class => 'type-select select2 fullwidth' %>
+    <% if promotion_rule.preferred_reason_id.blank? %>
+      <span class="warning info"><%= t(:add_reason) %></span>
+    <% end %>
+  </div>
+</div>
+

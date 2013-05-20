@@ -1,7 +1,26 @@
-<p class="field">
-  <% field_name = "#{param_prefix}[preferred_amount]" %>
-  <%= label_tag field_name, t(:preferred_amount) %>
-  <%= preference_field_tag(field_name,
+<div class="calculator-fields row">
+  <div class="field alpha four columns">
+    <% field_name = "#{param_prefix}[preferred_amount]" %>
+    <%= label_tag field_name, t(:preferred_amount) %>
+    <%= preference_field_tag(field_name,
                           promotion_action.get_preference(:amount),
                          :type => promotion_action.preferred_amount) %>
-</p>
+  </div>
+  <div class="field omega four columns">
+    <% field_name = "#{param_prefix}[preferred_reason_id]" %>
+    <%= label_tag field_name, t(:preferred_reason) %>
+    <%= select_tag field_name,
+                   options_for_select(Spree::StoreCreditReason.all.map { |scr| [scr.name, scr.id] }, promotion_action.preferred_reason_id),
+                   :class => 'type-select select2 fullwidth' %>
+    <% if promotion_action.preferred_reason_id.blank? %>
+      <span class="warning info"><%= t(:add_reason) %></span>
+    <% end %>
+  </div>
+  <div class="field alpha four columns">
+    <% field_name = "#{param_prefix}[preferred_expiry_days]" %>
+    <%= label_tag field_name, t(:preferred_expiry_days) %>
+    <%= preference_field_tag(field_name,
+                          promotion_action.get_preference(:expiry_days),
+                         :type => promotion_action.preferred_expiry_days) %>
+  </div>
+</div>

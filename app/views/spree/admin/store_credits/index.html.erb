@@ -1,6 +1,14 @@
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
 
-<h1 class="page-title "> <%= t("listing_store_credits") %></h1><br>
+<% content_for :page_title do %>
+  <%= t("listing_store_credits") %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to t(:new_store_credit), new_object_url, :icon => 'icon-plus', :id => 'admin_new_store_credit_link' %>
+  </li>
+<% end %>
 
 <table class="index">
   <thead>

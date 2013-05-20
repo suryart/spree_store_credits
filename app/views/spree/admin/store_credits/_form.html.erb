@@ -1,8 +1,24 @@
-<%= f.field_container :amount do %>
-  <%= f.label :amount, t("amount")%><br />
-  <%= f.text_field :amount %>
-<% end %>
-<%= f.field_container :reason do %>
-  <%= f.label :reason, t("reason")%><br />
-  <%= f.text_field :reason %>
-<% end %>
+<fieldset data-hook="store_credit_form">
+  <%= f.field_container :reason do %>
+    <%= f.label :reason, t(:store_credit_reason) %> <span class="required">*</span><br />
+    <%= f.select :store_credit_reason_id, options_from_collection_for_select(@store_credit_reasons, :id, :name), { :include_blank => false }, { :class => 'select2' } %>
+    <%= f.error_message_on :store_credit_reason_id %>
+  <% end %>
+  <%= f.field_container :amount do %>
+    <%= f.label :amount, t(:store_credit_amount)%> <span class="required">*</span><br />
+    <%= f.text_field :amount %>
+  <% end %>
+  <%= f.field_container :expiry do %>
+    <%= f.label :expiry, t(:credit_expiry) %><br>
+    <%= f.text_field :expiry, :class => 'datepicker' %>
+    <%= f.error_message_on :expiry %>
+  <% end %>
+  <%= f.field_container :user do %>
+    <%= f.label :user, t(:store_credit_user_email)%> <span class="required">*</span><br />
+    <%= f.text_field :user_id, :value => (@store_credit.new_record? ? @user.try(:email) : @store_credit.email) %>
+  <% end %>
+  <%#= f.field_container :applies_on do %>
+    <%#= f.label :applies_on, t(:store_credit_applies_on)%><!-- <span class="required">*</span><br /> -->
+    <%#= f.text_field :applies_on %>
+  <%# end %>
+</fieldset>

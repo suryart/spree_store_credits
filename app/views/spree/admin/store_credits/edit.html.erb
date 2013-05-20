@@ -1,10 +1,25 @@
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
 
-<h1><%=t("editing_store_credit")%></h1>
+<% content_for :page_title do %>
+  <%=t("editing_store_credit")%> : <%= @store_credit.name unless @store_credit.store_credit_reason.nil? %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to t(:new_store_credit), new_object_url, :icon => 'icon-plus', :id => 'admin_new_store_credit_link' %>
+  </li>
+<% end %>
+
+<% if @reissue %>
+  <h1><%=t("reissue_store_credit")%><%= link_to_show_user(@user) %></h1>
+<% else %>
+  <h1><%=t("editing_store_credit")%><%= link_to_show_user(@user) %></h1>
+<% end %>
 
 <%= render 'spree/shared/error_messages', :target => @store_credit %>
 
 <%= form_for(:store_credit, :url => object_url, :html => { :method => :put }) do |f| %>
+  <%= hidden_field_tag(:reissue, @reissue) if @reissue %>
   <%= render :partial => "form", :locals => { :f => f } %>
   <%= render :partial => "spree/admin/shared/edit_resource_links" %>
 <% end %>

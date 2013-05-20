@@ -1,8 +1,7 @@
 <%= render :partial => 'spree/admin/shared/configuration_menu' %>
 
-
 <% content_for :page_title do %>
-  <%=t("new_store_credit")%><%= link_to_show_user(@user) %>
+  <%=t("new_store_credit_reason")%>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -11,9 +10,9 @@
   </li>
 <% end %>
 
-<%= render 'spree/shared/error_messages', :target => @store_credit %>
+<%= render 'spree/shared/error_messages', :target => @store_credit_reason %>
 
-<%= form_for [:admin, @user, @store_credit] do |f| %>
+<%= form_for [:admin, @store_credit_reason] do |f| %>
   <%= render :partial => "form", :locals => { :f => f } %>
   <%= render :partial => "spree/admin/shared/new_resource_links" %>
 <% end %>

@@ -1,0 +1,41 @@
+<br>
+<hr>
+<p>
+  <h1 class="thirteen columns"><%= t(:store_credits) %> </h1>
+  <span class="two columns"><%= button_to(t(:add_new_store_credit), [:new, :admin, @user, :store_credit], :method => :get) %></span>
+  <br>
+  <br>
+  <h4><%= t(:total_number_of_credits) %><%= @user.store_credits.count %></h4>
+  <table class="index" id="listing_store_credits" data-hook='show_users_store_credit'>
+    <thead>
+      <tr data-hook="admin_show_user_store_credits_header">
+        <th><%= t(:credit_reason) %></th>
+        <th><%= t(:credit_amount) %></th>
+        <th><%= t(:credit_remaining_amount) %></th>
+        <th><%= t(:credit_applies_on_amount) %></th>
+        <th><%= t(:credit_expires_at) %></th>
+        <th data-hook="admin_store_credit_header_actions" class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @user.store_credits.each do |store_credit| %>
+        <tr id="<%= spree_dom_id store_credit %>" data-hook="admin_show_users_store_credits_rows" class="<%= cycle('odd', 'even')%>">
+          <td><%= store_credit.try(:reason) %></td>
+          <td><%= store_credit.try(:amount) %></td>
+          <td><%= store_credit.try(:remaining_amount) %></td>
+          <td><%= store_credit.try(:applies_on) %></td>
+          <td><%= store_credit.try(:expiry) %></td>
+          <td class="actions" data-hook="admin_show_users_store_credits_row_actions">
+            <p class="actions" data-hook="actions">
+              <% if store_credit.amount <= store_credit.remaining_amount %>
+                <%= link_to_edit_url [:edit, :admin, @user, store_credit], :no_text => true %>
+              <% else %>
+                <%= link_to_with_icon('icon-repeat', t(:reissue_store_credit), edit_admin_user_store_credit_path(:user_id => @user.id, :id => store_credit.id, :reissue => true), :no_text => true) %>
+              <% end %>
+            </p>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</p>
