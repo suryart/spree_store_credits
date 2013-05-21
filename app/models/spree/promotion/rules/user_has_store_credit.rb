@@ -5,7 +5,7 @@ module Spree
         # has_and_belongs_to_many :store_credit_reasons, :class_name => '::Spree::StoreCreditReason', :join_table => 'spree_products_promotion_rules', :foreign_key => 'promotion_rule_id'
         # validate :only_one_promotion_per_store_credit
 
-        preference :reason_id, :integer, :default => Spree::StoreCreditReason.first.id
+        preference :reason_id, :integer, :default => (Spree::StoreCreditReason.table_exists? ? Spree::StoreCreditReason.first.try(:id) : nil)
 
         attr_accessible :preferred_reason_id #, :preferred_operator
 

@@ -15,7 +15,7 @@ module Spree
         before_destroy :deals_with_adjustments
 
         preference :amount, :decimal, :default => 0.0
-        preference :reason_id, :integer, :default => Spree::StoreCreditReason.first.id
+        preference :reason_id, :integer, :default => (Spree::StoreCreditReason.table_exists? ? Spree::StoreCreditReason.first.try(:id) : nil)
         attr_accessible :preferred_amount, :preferred_reason_id
 
         # Creates the store credit adjustment from customer's active store credits 
@@ -24,7 +24,6 @@ module Spree
         def perform(options = {})
           order = options[:order]
           return if order.promotion_credit_exists?(self.promotion)
-          label = Spree::StoreCreditReason.find(preferred_reason_id).name
 
           if _user = options[:user]
             store_credit = _user.store_credits.active.detect{ |sc| sc.store_credit_reason_id == preferred_reason_id }
