@@ -59,7 +59,7 @@ Spree::Order.class_eval do
         sca.update_attributes({:amount => -(@store_credit_amount)})
       else
         # create adjustment off association to prevent reload
-        sca = adjustments.store_credits.create(:label => Spree::Config[:user_default_reason] , :amount => -(@store_credit_amount))
+        sca = adjustments.store_credits.create(:label => Spree::Config[:user_default_reason], :amount => -(@store_credit_amount))
       end
     end
 

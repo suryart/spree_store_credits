@@ -3,7 +3,7 @@ class Spree::StoreCredit < ActiveRecord::Base
 
   validates :amount, :remaining_amount, :presence => true, :numericality => true
   validates :user, :store_credit_reason, :presence => true
-  validates :user_id, :uniqueness => true, :scope => :store_credit_reason_id
+  validates :user_id, :uniqueness => true, :scope => :store_credit_reason_id, :if => Spree::Config[:unique_store_credits_per_user]
   validate :amounts, :expiry_date
 
   belongs_to :store_credit_reason
