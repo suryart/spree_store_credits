@@ -19,6 +19,7 @@ module SpreeStoreCredits
 
     initializer 'spree_store_credits.register.promotion.actions', :after => 'spree.promo.register.promotions.actions' do |app|
       app.config.spree.promotions.actions <<  Spree::Promotion::Actions::GiveStoreCredit
+      app.config.spree.promotions.actions <<  Spree::Promotion::Actions::ConsumeStoreCredit
     end
 
     initializer 'spree_store_credits.register.promotions.rules', :after => 'spree.promo.register.promotions.rules' do |app|

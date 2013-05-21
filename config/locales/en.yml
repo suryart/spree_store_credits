@@ -22,6 +22,10 @@ en:
     user_has_store_credit:
       name: User has store credit
       description: "Customer's store credit name must match with promotion code"
+  promotion_action_types:
+    consume_store_credit_as_adjustment:
+      name: Consume customer's store credit as adjustment
+      description: "Customer's store credit name must match with credit reason rule"
   remaining_amount: "Remaining amount"
   reissue_store_credit: "Re-issue store credit"
   store_credit: "Store Credit"
