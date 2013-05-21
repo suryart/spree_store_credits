@@ -3,11 +3,11 @@ if Spree.user_class
     has_many :store_credits, :class_name => "Spree::StoreCredit"
 
     def has_store_credit?
-      store_credits.present?
+      store_credits.active.present?
     end
 
     def store_credits_total
-      store_credits.sum(:remaining_amount)
+      store_credits.active.sum(:remaining_amount)
     end
   end
 end

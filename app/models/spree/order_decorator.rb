@@ -25,7 +25,7 @@ Spree::Order.class_eval do
   end
 
   def store_credit_amount
-    adjustments.store_credits.sum(:amount).abs.to_f
+    adjustments.store_credits.active.sum(:amount).abs.to_f
   end
 
   # in case of paypal payment, item_total cannot be 0
@@ -59,7 +59,7 @@ Spree::Order.class_eval do
         sca.update_attributes({:amount => -(@store_credit_amount)})
       else
         # create adjustment off association to prevent reload
-        sca = adjustments.store_credits.create(:label => I18n.t(:store_credit) , :amount => -(@store_credit_amount))
+        sca = adjustments.store_credits.create(:label => Spree::Config[:user_default_reason] , :amount => -(@store_credit_amount))
       end
     end
 

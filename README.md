@@ -45,7 +45,7 @@ Also extends My Account page to display outstanding credit balance, and orders t
     # Find any user in your database:
     user = Spree::User.first
 
-    # Check is user has store credit(s)?
+    # Check if user has store credit(s)?
     user.store_credits
 
     # Check if they have any active store credit(s)
@@ -54,8 +54,19 @@ Also extends My Account page to display outstanding credit balance, and orders t
 
 A store credit is active only when:
 
-1. Remaining amount(**:remaining_amount**) is more than 0.
+1. Remaining amount( **:remaining_amount** ) is more than 0.
 2. Expiry is either nil, or a future date.
+
+## Overriding configuration and preferences
+
+You can use put this at the bottom of your **application's app/config/initializers/spree.rb**:
+    
+  ```ruby
+    Spree.config do |config|
+      config.use_store_credit_minimum = 20 # Default is 30
+      config.user_default_reason = "My Store Wallet" # Default is 'Store Credit'
+    end
+  ```
 
 ## Testing
 
