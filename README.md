@@ -62,13 +62,15 @@ A store credit is active only when:
 You can use put this at the bottom of your **application's app/config/initializers/spree.rb**:
     
   ```ruby
-    Spree.config do |config|
+    Spree::StoreCredit.config do |config|
       #  Default minimum store credit minimum applicable on order
       config.use_store_credit_minimum = 20 # Default is 30
       # Just in case you need to show your users a different label, like: 'Wallet'
       config.user_default_reason = "My Store Wallet" # Default is 'Store Credit'
       # If you want to have unique store credits for customers
       config.unique_store_credits_per_user = true # Default is false
+      # if Store Credit Type is mendatory
+      config.store_credit_type_required = true
     end
   ```
 

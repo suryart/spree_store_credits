@@ -1,0 +1,39 @@
+<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= t(:store_credit_type_index) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to t(:new_store_credit), new_object_url, :icon => 'icon-plus', :id => 'admin_new_store_credit_type_link' %>
+  </li>
+<% end %>
+
+<table class="index">
+  <thead>
+    <tr>
+      <th><%= t("name") %></th>
+      <th><%= t("created_at") %></th>
+      <th><%= t("updated_at") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @store_credit_types.each do |store_credit_type|%>
+      <tr id="<%= dom_id store_credit_type %>">
+        <td><%= store_credit_type.name %></td>
+        <td><%= store_credit_type.created_at %></td>
+        <td><%= store_credit_type.updated_at %></td>
+        <td class="actions">
+          <%= link_to_edit store_credit_type, :no_text => true %> &nbsp;
+          <%= link_to_delete store_credit_type, :no_text => true %>
+        </td>
+      </tr>
+    <% end %>
+    <% if @store_credit_types.empty? %>
+      <tr><td colspan="4"><%= t(:none) %></td></tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @store_credit_types %>

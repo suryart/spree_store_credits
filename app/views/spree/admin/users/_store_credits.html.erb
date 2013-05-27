@@ -12,7 +12,6 @@
         <th><%= t(:credit_reason) %></th>
         <th><%= t(:credit_amount) %></th>
         <th><%= t(:credit_remaining_amount) %></th>
-        <th><%= t(:credit_applies_on_amount) %></th>
         <th><%= t(:credit_expires_at) %></th>
         <th data-hook="admin_store_credit_header_actions" class="actions"></th>
       </tr>
@@ -20,10 +19,9 @@
     <tbody>
       <% @user.store_credits.each do |store_credit| %>
         <tr id="<%= spree_dom_id store_credit %>" data-hook="admin_show_users_store_credits_rows" class="<%= cycle('odd', 'even')%>">
-          <td><%= store_credit.try(:reason) %></td>
+          <td><%= store_credit.try(:name) %></td>
           <td><%= store_credit.try(:amount) %></td>
           <td><%= store_credit.try(:remaining_amount) %></td>
-          <td><%= store_credit.try(:applies_on) %></td>
           <td><%= store_credit.try(:expiry) %></td>
           <td class="actions" data-hook="admin_show_users_store_credits_row_actions">
             <p class="actions" data-hook="actions">

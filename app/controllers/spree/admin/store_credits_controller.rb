@@ -33,6 +33,7 @@ module Spree
 
     def load_store_credit_reasons_and_user
       @store_credit_reasons = Spree::StoreCreditReason.all
+      @store_credit_types = Spree::StoreCreditType.all
       @user = load_user(params[:user_id])
     end
 

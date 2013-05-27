@@ -1,14 +1,14 @@
 <div class="calculator-fields row">
   <div class="field alpha four columns">
     <% field_name = "#{param_prefix}[preferred_amount]" %>
-    <%= label_tag field_name, t(:preferred_amount) %>
+    <%= label_tag field_name, t(:preferred_credit_amount) %>
     <%= preference_field_tag(field_name,
                           promotion_action.get_preference(:amount),
                          :type => promotion_action.preferred_amount) %>
   </div>
   <div class="field omega four columns">
     <% field_name = "#{param_prefix}[preferred_reason_id]" %>
-    <%= label_tag field_name, t(:preferred_reason) %>
+    <%= label_tag field_name, t(:preferred_credit_reason) %>
     <%= select_tag field_name,
                    options_for_select(Spree::StoreCreditReason.all.map { |scr| [scr.name, scr.id] }, promotion_action.preferred_reason_id),
                    :class => 'type-select select2 fullwidth' %>
@@ -16,6 +16,18 @@
       <span class="warning info"><%= t(:add_reason) %></span>
     <% end %>
   </div>
+  <% if Spree::StoreCreditConfig[:store_credit_type_required] %>
+    <div class="field omega four columns">
+      <% field_name = "#{param_prefix}[preferred_reason_id]" %>
+      <%= label_tag field_name, t(:preferred_credit_type) %>
+      <%= select_tag field_name,
+                     options_for_select(Spree::StoreCreditType.all.map { |scr| [scr.name, scr.id] }, promotion_action.preferred_type_id),
+                     :class => 'type-select select2 fullwidth' %>
+      <% if promotion_action.preferred_type_id.blank? %>
+        <span class="warning info"><%= t(:add_type) %></span>
+      <% end %>
+    </div>
+  <% end %>
   <div class="field alpha four columns">
     <% field_name = "#{param_prefix}[preferred_expiry_days]" %>
     <%= label_tag field_name, t(:preferred_expiry_days) %>

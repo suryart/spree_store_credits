@@ -13,12 +13,16 @@
     <%= f.text_field :expiry, :class => 'datepicker' %>
     <%= f.error_message_on :expiry %>
   <% end %>
+  <%= f.field_container :type do %>
+    <%= f.label :type, t(:store_credit_type) %> 
+    <% if Spree::StoreCreditConfig[:store_credit_type_required] %>
+      <span class="required">*</span><br /> 
+    <% end %>
+    <%= f.select :store_credit_type_id, options_from_collection_for_select(@store_credit_types, :id, :name), { :include_blank => true }, { :class => 'select2' } %>
+    <%= f.error_message_on :store_credit_type_id %>
+  <% end %>
   <%= f.field_container :user do %>
     <%= f.label :user, t(:store_credit_user_email)%> <span class="required">*</span><br />
     <%= f.text_field :user_id, :value => (@store_credit.new_record? ? @user.try(:email) : @store_credit.email) %>
   <% end %>
-  <%#= f.field_container :applies_on do %>
-    <%#= f.label :applies_on, t(:store_credit_applies_on)%><!-- <span class="required">*</span><br /> -->
-    <%#= f.text_field :applies_on %>
-  <%# end %>
 </fieldset>

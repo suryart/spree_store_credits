@@ -13,6 +13,13 @@ Deface::Override.new(
   :disabled => false)
 
 Deface::Override.new(
+  :virtual_path => "spree/admin/shared/_configuration_menu",
+  :name => "store_credit_types_admin_configurations_menu",
+  :insert_bottom => "[data-hook='admin_configurations_sidebar_menu']",
+  :text => "<%= configurations_sidebar_menu_item t(:store_credit_types), admin_store_credit_types_url %>",
+  :disabled => false)
+
+Deface::Override.new(
   :virtual_path => "spree/admin/users/show",
   :name => "show_user_store_credits",
   :insert_after => "p",

@@ -1,12 +1,14 @@
 class Spree::StoreCredit < ActiveRecord::Base
-  attr_accessible :user_id, :amount, :store_credit_reason_id, :remaining_amount, :expiry
+  attr_accessible :user_id, :amount, :store_credit_reason_id, :store_credit_type_id, :remaining_amount, :expiry
 
   validates :amount, :remaining_amount, :presence => true, :numericality => true
   validates :user, :store_credit_reason, :presence => true
-  validates :user_id, :uniqueness => true, :scope => :store_credit_reason_id, :if => Spree::Config[:unique_store_credits_per_user]
+  validates :store_credit_type_id, :presence => true, :if => "Spree::StoreCreditConfig[:store_credit_type_required]"
+  validates :user_id, :uniqueness => { :scope => :store_credit_reason_id, :message => I18n.t(:unique_store_credits_per_user_error_message) }, :if => "Spree::StoreCreditConfig[:unique_store_credits_per_user]"
   validate :amounts, :expiry_date
 
   belongs_to :store_credit_reason
+  belongs_to :store_credit_type
 
   delegate :name, :to => :store_credit_reason, :prefix => false
   delegate :email, :to => :user, :prefix => false
@@ -17,7 +19,11 @@ class Spree::StoreCredit < ActiveRecord::Base
     belongs_to :user, :class_name => Spree.user_class.to_s
   else
     belongs_to :user
-    attr_accessible :amount, :store_credit_reason_id, :remaining_amount, :user_id, :expiry
+    attr_accessible :amount, :store_credit_reason_id, :store_credit_type_id, :remaining_amount, :user_id, :expiry
+  end
+
+  def self.config(&block)
+    yield(Spree::StoreCreditConfig)
   end
 
   private

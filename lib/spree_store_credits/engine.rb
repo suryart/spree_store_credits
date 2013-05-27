@@ -6,6 +6,10 @@ module SpreeStoreCredits
 
     config.autoload_paths += %W(#{config.root}/lib)
 
+    initializer "spree_store_credits.environment", :before => "spree.environment" do |app|
+      Spree::StoreCreditConfig = Spree::StoreCreditConfiguration.new
+    end
+
     # use rspec for tests
     config.generators do |g|
       g.test_framework :rspec

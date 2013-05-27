@@ -15,8 +15,9 @@ en:
   invalid_remaning_amount: "can't be greater than amount"
   invalid_expiry: "must be a future date"
   orders_with_store_credit: "Orders with store credit"
-  preferred_amount: "Preferred amount"
-  preferred_reason: "Preferred credit reason"
+  preferred_credit_amount: "Preferred amount"
+  preferred_credit_reason: "Preferred credit reason"
+  preferred_credit_type: "Preferred credit type"
   preferred_expiry_days: "Number of days to expire this credit (leave blank if credit never expires)"
   promotion_rule_types:
     user_has_store_credit:
@@ -38,6 +39,7 @@ en:
   store_credit_maximum_amount: "The store credit amount should be less or equal to %{amount}. This is mandatory for the order to be confirmed."
   store_credits: "Store Credits"
   total_number_of_credits: "Total number of credits found: "
+  unique_store_credits_per_user_error_message: "can't have multiple store credits with the same reason"
   you_have_store_credit: "You have %{amount} of store credits"
   was_fully_used: "was fully used"
   was_partially_used: "was partially used"
