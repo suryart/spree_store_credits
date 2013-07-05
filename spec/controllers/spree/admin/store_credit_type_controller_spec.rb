@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Spree::Admin::StoreCreditTypeController do
+describe Spree::Admin::StoreCreditTypesController do
 
 end
