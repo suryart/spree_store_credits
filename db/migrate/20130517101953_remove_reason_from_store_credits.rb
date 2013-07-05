@@ -14,7 +14,7 @@ class RemoveReasonFromStoreCredits < ActiveRecord::Migration
     }
     all_store_credits.each{ |sc| 
       store_credit_reason = all_store_credit_reasons.detect{|scr| scr.name == sc.reason }
-      sc.update_attributes(:store_credit_reason_id => store_credit_reason.id) unless store_credit_reason.nil?
+      sc.update_attribute(:store_credit_reason_id, store_credit_reason.id) unless store_credit_reason.nil?
     }
     if column_exists?(:spree_store_credits, :reason)
       remove_column :spree_store_credits, :reason
@@ -31,7 +31,7 @@ class RemoveReasonFromStoreCredits < ActiveRecord::Migration
     # and destroy the data from Spree::StoreCreditReason
     all_store_credit_reasons = Spree::StoreCreditReason.includes(:store_credits).all
     all_store_credit_reasons.each{ |scr| 
-      scr.store_credits.each{ |sc| sc.update_attributes(:reason => scr.name) }
+      scr.store_credits.each{ |sc| sc.update_attribute(:reason, scr.name) }
     }
     Spree::StoreCreditReason.destroy_all
 
