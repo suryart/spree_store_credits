@@ -25,29 +25,31 @@ module Spree
           order = options[:order]
           return if order.promotion_credit_exists?(self.promotion)
 
-          if _user = options[:user]
-            store_credit = _user.store_credits.active.detect{ |sc| sc.store_credit_reason_id == preferred_reason_id }
-            self.create_adjustment(order, order, store_credit) unless store_credit.nil?
-          end
+          self.create_adjustment(order) unless order.nil?
         end
 
         # Override of CalculatedAdjustments#create_adjustment so promotional
         # store credit adjustments are added from customer's 
         # verfied and valid store credits.
-        def create_adjustment(target, calculable, source, mandatory=false)
-          amount = compute_amount(calculable)
-          params = { :amount => amount,
-                    :source => source,
-                    :originator => self,
-                    :label => source.name,
-                    :mandatory => mandatory }
-          target.adjustments.create(params, :without_protection => true)
+        def create_adjustment(order, mandatory=false)
+          source = find_source(order)
+          amount = compute_amount(order)
+          params = {  :amount => amount,
+                      :label => source.name,
+                      :source => source,                   
+                      :originator => self,
+                      :mandatory => mandatory }
+          order.adjustments.create(params, :without_protection => true)
         end
 
         # Ensure a negative amount which does not exceed the sum of the order's
         # item_total and ship_total
         def compute_amount(calculable)
           [(calculable.item_total + calculable.ship_total), super.to_f.abs].min * -1
+        end
+
+        def find_source(order)
+          order.user.store_credits.active.detect{ |sc| sc.store_credit_reason_id == preferred_reason_id }
         end
 
         private
