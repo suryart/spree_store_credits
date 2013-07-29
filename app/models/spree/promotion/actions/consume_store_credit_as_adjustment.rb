@@ -33,7 +33,7 @@ module Spree
         # verfied and valid store credits.
         def create_adjustment(order, mandatory=false)
           source = find_source(order)
-          amount = compute_amount(order)
+          amount = compute_amount(order, source)
           params = {  :amount => amount,
                       :label => source.name,
                       :source => source,                   
@@ -44,8 +44,8 @@ module Spree
 
         # Ensure a negative amount which does not exceed the sum of the order's
         # item_total and ship_total
-        def compute_amount(calculable)
-          [(calculable.item_total + calculable.ship_total), super.to_f.abs].min * -1
+        def compute_amount(calculable, store_credit)
+          [(calculable.item_total + calculable.ship_total), store_credit.remaining_amount, super.to_f.abs].min * -1
         end
 
         def find_source(order)
