@@ -33,6 +33,7 @@ module Spree
         # verfied and valid store credits.
         def create_adjustment(order, mandatory=false)
           source = find_source(order)
+          return if source.nil?
           amount = compute_amount(order)
           params = {  :amount => amount,
                       :label => source.name,
