@@ -18,7 +18,7 @@
   </div>
   <% if Spree::StoreCreditConfig[:store_credit_type_required] %>
     <div class="field omega four columns">
-      <% field_name = "#{param_prefix}[preferred_reason_id]" %>
+      <% field_name = "#{param_prefix}[preferred_type_id]" %>
       <%= label_tag field_name, t(:preferred_credit_type) %>
       <%= select_tag field_name,
                      options_for_select(Spree::StoreCreditType.all.map { |scr| [scr.name, scr.id] }, promotion_action.preferred_type_id),
