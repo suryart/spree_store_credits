@@ -12,7 +12,7 @@ if Spree.user_class
     # is 'Store Credit', 'Store Wallet', or 'My Credits'
     def store_credits_total
       reason = Spree::StoreCreditReason.find_or_create_by_name(Spree::StoreCreditConfig[:user_default_reason])
-      store_credits.active.where(:store_credit_reason_id => reason.id).sum(:remaining_amount)
+      store_credits.active.sum(:remaining_amount)
     end
   end
 end
