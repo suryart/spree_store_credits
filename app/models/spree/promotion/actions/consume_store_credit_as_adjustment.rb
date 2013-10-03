@@ -49,10 +49,11 @@ module Spree
           store_credit = find_source(calculable)
           calc_amount = [(calculable.item_total + calculable.ship_total), super.to_f.abs].min
           remaining_amount =  store_credit.try(:remaining_amount)
-          (remaining_amount.nil? ? calc_amount : [calc_amount, remaining_amount].min) * -1
+          (remaining_amount.nil? ? calc_amount : [calc_amount, remaining_amount].reject(&:blank?).min) * -1
         end
 
         def find_source(order)
+          return nil unless order.user.present?
           order.user.store_credits.active.detect{ |sc| sc.store_credit_reason_id == preferred_reason_id }
         end
 
